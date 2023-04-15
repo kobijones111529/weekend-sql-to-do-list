@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { getTodos } from '../data/dummy.js'
+import { addTodo, getTodos } from '../data/dummy.js'
 
 const router = Router()
 
@@ -7,6 +7,17 @@ router.get('/', (_, res) => {
   getTodos()
     .then(todos => {
       res.send(todos)
+    })
+    .catch(err => {
+      console.error(err)
+      res.sendStatus(500)
+    })
+})
+
+router.post('/', (req, res) => {
+  addTodo(req.body)
+    .then(() => {
+      res.sendStatus(201)
     })
     .catch(err => {
       console.error(err)

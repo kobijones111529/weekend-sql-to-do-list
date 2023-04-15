@@ -1,4 +1,4 @@
-const todos = [
+const existingTodos = [
   {
     todo: 'Walk dog'
   },
@@ -13,12 +13,18 @@ const id = (function * () {
   }
 })()
 
-const table = todos.map(todo => {
+const addId = todo => {
   const entries = Object.entries(todo)
   entries.unshift(['id', id.next().value])
   return Object.fromEntries(entries)
-})
+}
+
+const table = existingTodos.map(todo => addId(todo))
 
 export const getTodos = async () => {
   return table
+}
+
+export const addTodo = async (todo) => {
+  table.push(addId(todo))
 }

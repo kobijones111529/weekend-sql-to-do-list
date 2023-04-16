@@ -21,3 +21,13 @@ export const deleteTodo = async (id) => {
     url: `/todos/${id}`
   })
 }
+
+export const markComplete = async id => {
+  return $.ajax({
+    method: 'PATCH',
+    url: `/todos/${id}`,
+    data: {
+      complete: true
+    }
+  })
+}

@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do App</title>
+    <link rel="stylesheet" href="styles/style.css">
     <script type="importmap">
       {
         "imports": {
@@ -15,15 +16,22 @@
     <script src="index.js" type="module"></script>
   </head>
   <body>
-    <h1>To-Do App</h1>
-    <form id="add-todo-form">
-      <input type="text" name="todo" placeholder="Wacha up to?" autofocus>
-      <button type="submit">+</button>
-    </form>
-    <table>
-      <tbody id="todo-list">
-        <!-- To-do items rendered here -->
-      </tbody>
-    </table>
+    <header>
+      <h1>To-Do App</h1>
+    </header>
+    <main>
+      <div class="content">
+        <form id="add-todo-form">
+          <input type="text" name="todo" placeholder="Wacha up to?" autofocus>
+          <button type="submit" class="btn btn-add btn-circular">+</button>
+        </form>
+        <hr>
+        <table>
+          <tbody id="todo-list">
+            <!-- To-do items rendered here -->
+          </tbody>
+        </table>
+      </div>
+    </main>
   </body>
 </html>

@@ -28,6 +28,7 @@ router.post('/', (req, res) => {
 router.delete('/:id', (req, res) => {
   const id = Number(req.params.id)
 
+  // Ensure id is valid
   if (!Number.isInteger(id)) {
     console.error('id is not an integer')
     res.sendStatus(400)
@@ -48,12 +49,14 @@ router.patch('/:id', (req, res) => {
   const id = Number(req.params.id)
   const complete = Boolean(req.body.complete)
 
+  // Ensure id is valid
   if (!Number.isInteger(id)) {
     console.error('id is not an integer')
     res.sendStatus(400)
     return
   }
 
+  // Marking todo incomplete not supported
   if (complete !== true) {
     console.error('invalid patch data')
     res.sendStatus(400)

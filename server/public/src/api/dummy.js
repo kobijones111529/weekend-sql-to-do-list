@@ -23,14 +23,14 @@ const table = todos.map(todo => {
 
 export const getTodos = async () => table
 
-export const addTodo = async (todo) => {
+export const addTodo = async todo => {
   table.push({
     id: id.next().value,
     todo
   })
 }
 
-export const deleteTodo = async (id) => {
+export const deleteTodo = async id => {
   const index = table.findIndex(todo => todo.id === id)
 
   if (index === -1) {

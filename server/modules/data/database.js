@@ -1,5 +1,8 @@
 import pool from '../pool.js'
 
+/**
+ * Get todos from database
+ */
 export const getTodos = async () => {
   const query = `
     SELECT * FROM "todos"
@@ -9,6 +12,10 @@ export const getTodos = async () => {
   return result.rows
 }
 
+/**
+ * Add todo to database
+ * @param todo New todo
+ */
 export const addTodo = async todo => {
   const query = `
     INSERT INTO "todos"
@@ -20,6 +27,10 @@ export const addTodo = async todo => {
   return pool.query(query, queryData)
 }
 
+/**
+ * Delete todo from database
+ * @param {number} id ID of todo to delete
+ */
 export const deleteTodo = async id => {
   const query = `
     DELETE FROM "todos"
@@ -29,6 +40,10 @@ export const deleteTodo = async id => {
   return pool.query(query, queryData)
 }
 
+/**
+ * Mark todo complete in database
+ * @param {number} id ID of complete todo
+ */
 export const markComplete = async id => {
   const query = `
     UPDATE "todos"

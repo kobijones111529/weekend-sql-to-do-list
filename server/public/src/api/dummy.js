@@ -1,6 +1,12 @@
 const todos = [
-  'Walk dog',
-  'Eat the rich'
+  {
+    todo: 'Walk dog',
+    complete: false
+  },
+  {
+    todo: 'Eat the rich',
+    complete: false
+  }
 ]
 
 const id = (function * () {
@@ -10,7 +16,9 @@ const id = (function * () {
 }())
 
 const table = todos.map(todo => {
-  return { id: id.next().value, todo }
+  const entries = Object.entries(todo)
+  entries.unshift(['id', id.next().value])
+  return Object.fromEntries(entries)
 })
 
 export const getTodos = async () => table
@@ -24,5 +32,20 @@ export const addTodo = async (todo) => {
 
 export const deleteTodo = async (id) => {
   const index = table.findIndex(todo => todo.id === id)
+
+  if (index === -1) {
+    return
+  }
+
   table.splice(index, 1)
+}
+
+export const markComplete = async id => {
+  const index = table.findIndex(todo => todo.id === id)
+
+  if (index === -1) {
+    return
+  }
+
+  table[index].complete = true
 }

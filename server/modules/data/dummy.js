@@ -1,9 +1,11 @@
 const existingTodos = [
   {
-    todo: 'Walk dog'
+    todo: 'Walk dog',
+    complete: false
   },
   {
-    todo: 'Walk cat'
+    todo: 'Walk cat',
+    complete: false
   }
 ]
 
@@ -37,4 +39,14 @@ export const deleteTodo = async (id) => {
   }
 
   table.splice(index, 1)
+}
+
+export const markComplete = async (id) => {
+  const index = table.findIndex(todo => todo.id === id)
+
+  if (index === -1) {
+    return
+  }
+
+  table[index].complete = true
 }

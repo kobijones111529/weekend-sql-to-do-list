@@ -2,13 +2,14 @@ import pool from '../pool.js'
 
 export const getTodos = async () => {
   const query = `
-    SELECT * FROM "todos";
+    SELECT * FROM "todos"
+      ORDER BY "id";
   `
   const result = await pool.query(query)
   return result.rows
 }
 
-export const addTodo = async (todo) => {
+export const addTodo = async todo => {
   const query = `
     INSERT INTO "todos"
       ("todo")
@@ -19,9 +20,19 @@ export const addTodo = async (todo) => {
   return pool.query(query, queryData)
 }
 
-export const deleteTodo = async (id) => {
+export const deleteTodo = async id => {
   const query = `
     DELETE FROM "todos"
+      WHERE "id" = $1;
+  `
+  const queryData = [id]
+  return pool.query(query, queryData)
+}
+
+export const markComplete = async id => {
+  const query = `
+    UPDATE "todos"
+      SET "complete" = TRUE
       WHERE "id" = $1;
   `
   const queryData = [id]

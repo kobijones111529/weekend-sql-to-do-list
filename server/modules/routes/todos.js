@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { addTodo, deleteTodo, getTodos } from '../data/dummy.js'
+import { addTodo, deleteTodo, getTodos } from '../data/database.js'
 
 const router = Router()
 

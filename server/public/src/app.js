@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import { addTodo, deleteTodo, getTodos } from './api/dummy.js'
+import { addTodo, deleteTodo, getTodos } from './api/server.js'
 
 function setupEventListeners () {
   $('#add-todo-form').on('submit', handleSubmitTodo)
@@ -17,7 +17,9 @@ function handleSubmitTodo (event) {
   const jqForm = $(event.target)
   const jqTodo = jqForm.find('input[name=todo]')
 
-  const todo = jqTodo.val()
+  const todo = {
+    todo: jqTodo.val()
+  }
 
   validateTodo(todo)
     .then(todo => {
@@ -33,7 +35,7 @@ function handleSubmitTodo (event) {
 }
 
 async function validateTodo (todo) {
-  if (todo === '') {
+  if (todo.todo === '') {
     console.log('Invalid: empty todo')
     // TODO: handle empty todo
     throw new Error('empty')
@@ -41,7 +43,7 @@ async function validateTodo (todo) {
 
   const currentTodos = await getTodos()
 
-  const duplicate = currentTodos.find(existingTodo => existingTodo.todo === todo)
+  const duplicate = currentTodos.find(existingTodo => existingTodo.todo === todo.todo)
   if (duplicate !== undefined) {
     console.log('Invalid: duplicate todo')
     // TODO: handle duplicate todo
@@ -63,8 +65,9 @@ function handleDeleteTodo (event) {
     .then(() => {
       return getTodos()
     })
-    .catch(() => {
+    .catch(err => {
       // TODO: handle error
+      throw err
     })
     .then(todos => {
       renderTodos(todos)

@@ -18,3 +18,12 @@ export const addTodo = async (todo) => {
   const queryData = [todo.todo]
   return pool.query(query, queryData)
 }
+
+export const deleteTodo = async (id) => {
+  const query = `
+    DELETE FROM "todos"
+      WHERE "id" = $1;
+  `
+  const queryData = [id]
+  return pool.query(query, queryData)
+}

@@ -28,3 +28,13 @@ export const getTodos = async () => {
 export const addTodo = async (todo) => {
   table.push(addId(todo))
 }
+
+export const deleteTodo = async (id) => {
+  const index = table.findIndex(todo => todo.id === id)
+
+  if (index === -1) {
+    return
+  }
+
+  table.splice(index, 1)
+}

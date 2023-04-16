@@ -16,5 +16,8 @@ export const addTodo = async (todo) => {
 }
 
 export const deleteTodo = async (id) => {
-  throw new Error('delete not implemented')
+  return $.ajax({
+    method: 'DELETE',
+    url: `/todos/${id}`
+  })
 }

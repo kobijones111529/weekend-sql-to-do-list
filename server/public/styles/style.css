@@ -1,9 +1,16 @@
+@font-face {
+  font-family: 'Poppins';
+  src: url('../Poppins/Poppins-Regular.ttf');
+}
+
 body {
   width: 100vw;
   height: 100vh;
 
+  font-family: 'Poppins';
+
   margin: 0;
-  background-color: rgb(19, 19, 33);
+  background-color: rgb(21, 21, 29);
 
   display: flex;
   flex-flow: column;
@@ -32,16 +39,12 @@ main {
   max-width: 768px;
   margin: 0px 64px;
   padding: 48px;
-  box-shadow: 0px 0px 32px rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 0px 32px rgba(255, 255, 255, 0.05);
 
   display: flex;
   flex-flow: column;
   gap: 32px;
   align-items: center;
-}
-
-hr {
-  width: 90%;
 }
 
 #add-todo-form {
@@ -51,8 +54,28 @@ hr {
   align-items: center;
 }
 
-#add-todo-form input {
-  height: fit-content;
+input[type=text] {
+  outline: none;
+  border: none;
+  background-color: rgb(57, 73, 70);
+  padding: 0 16px;
+  height: 2rem;
+  border-radius: 9999px;
+  color: white;
+  transition: box-shadow 0.05s;
+}
+
+input[type=text]:focus {
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+  transition: box-shadow 0.05s;
+}
+
+hr {
+  width: 90%;
+  border: none;
+  border-radius: 9999px;
+  height: 1px;
+  background-color: white;
 }
 
 .btn {
@@ -80,5 +103,10 @@ hr {
 }
 
 .btn-add:active {
-  background-color: rgb(65, 85, 75);
+  background-color: rgb(223, 223, 223);
+  color: rgb(127, 127, 127);
+}
+
+.complete {
+  color: rgb(127, 127, 127);
 }

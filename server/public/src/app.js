@@ -106,7 +106,7 @@ function renderTodos (todos) {
   todos.reduce(
     (jqElem, todo) => {
       jqElem.append(`
-        <tr data-id="${todo.id}">
+        <tr ${todo.complete ? 'class="complete"' : ''} data-id="${todo.id}">
           <td>
             <input type="checkbox" class="mark-complete" ${todo.complete ? 'checked disabled' : ''}>
           </td>

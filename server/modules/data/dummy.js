@@ -16,11 +16,13 @@ const id = (function * () {
 })()
 
 const addId = todo => {
+  // Add generated id to todos
   const entries = Object.entries(todo)
   entries.unshift(['id', id.next().value])
   return Object.fromEntries(entries)
 }
 
+// Mock database table representation
 const table = existingTodos.map(todo => addId(todo))
 
 export const getTodos = async () => {

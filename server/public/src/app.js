@@ -124,6 +124,7 @@ function renderTodos (todos) {
 }
 
 function main () {
+  // Initial render
   getTodos()
     .then(todos => {
       renderTodos(todos)

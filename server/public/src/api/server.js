@@ -7,7 +7,7 @@ export const getTodos = async () => {
   })
 }
 
-export const addTodo = async (todo) => {
+export const addTodo = async todo => {
   return $.ajax({
     method: 'POST',
     url: '/todos',
@@ -15,7 +15,7 @@ export const addTodo = async (todo) => {
   })
 }
 
-export const deleteTodo = async (id) => {
+export const deleteTodo = async id => {
   return $.ajax({
     method: 'DELETE',
     url: `/todos/${id}`

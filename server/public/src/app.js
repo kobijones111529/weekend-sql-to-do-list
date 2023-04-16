@@ -1,9 +1,10 @@
 import $ from 'jquery'
-import { addTodo, deleteTodo, getTodos } from './api/server.js'
+import { addTodo, deleteTodo, getTodos, markComplete } from './api/server.js'
 
 function setupEventListeners () {
   $('#add-todo-form').on('submit', handleSubmitTodo)
-  $('#todo-list').on('click', '#delete-button', handleDeleteTodo)
+  $('#todo-list').on('click', '.delete-button', handleDeleteTodo)
+  $('#todo-list').on('click', '.mark-complete', handleMarkComplete)
 }
 
 /**
@@ -74,6 +75,31 @@ function handleDeleteTodo (event) {
     })
 }
 
+/**
+ * handle todo mark complete click event
+ * @param {MouseEvent} event Click event
+ */
+function handleMarkComplete (event) {
+  const jqTarget = $(event.target)
+
+  if (jqTarget.is(':disabled') || !jqTarget.is(':checked')) {
+    return
+  }
+
+  const row = jqTarget.parents('tr')
+  const id = row.data('id')
+  markComplete(id)
+    .then(() => {
+      return getTodos()
+    })
+    .catch(err => {
+      throw err
+    })
+    .then(todos => {
+      renderTodos(todos)
+    })
+}
+
 function renderTodos (todos) {
   const jqTodoList = $('#todo-list')
   jqTodoList.empty()
@@ -81,9 +107,13 @@ function renderTodos (todos) {
     (jqElem, todo) => {
       jqElem.append(`
         <tr data-id="${todo.id}">
-          <td>${todo.todo}</td>
           <td>
-            <button id="delete-button">Delete</button>
+            <input type="checkbox" class="mark-complete" ${todo.complete ? 'checked disabled' : ''}>
+          </td>
+          <td>
+            ${todo.complete ? `<strike>${todo.todo}</strike>` : todo.todo}
+          <td>
+            <button class="delete-button">Delete</button>
           </td>
         </tr>
       `)

@@ -1,0 +1,84 @@
+body {
+  width: 100vw;
+  height: 100vh;
+
+  margin: 0;
+  background-color: rgb(19, 19, 33);
+
+  display: flex;
+  flex-flow: column;
+  align-items: stretch;
+
+  color: white;
+}
+
+header {
+  text-align: center;
+}
+
+main {
+  flex: auto;
+  margin-bottom: 32px;
+
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+}
+
+.content {
+  flex: auto;
+  border-radius: 24px;
+  background-color: rgb(23, 22, 24);
+  max-width: 768px;
+  margin: 0px 64px;
+  padding: 48px;
+  box-shadow: 0px 0px 32px rgba(255, 255, 255, 0.1);
+
+  display: flex;
+  flex-flow: column;
+  gap: 32px;
+  align-items: center;
+}
+
+hr {
+  width: 90%;
+}
+
+#add-todo-form {
+  display: flex;
+  flex-flow: row;
+  gap: 12px;
+  align-items: center;
+}
+
+#add-todo-form input {
+  height: fit-content;
+}
+
+.btn {
+  outline: none;
+  border: none;
+}
+
+.btn-circular {
+  border-radius: 9999px;
+  width: 2rem;
+  height: 2rem;
+  padding: 0%;
+}
+
+.btn-add {
+  font-size: 24px;
+  background-color: rgb(41, 170, 84);
+  color: white;
+  transition: box-shadow 0.1s;
+}
+
+.btn-add:enabled:hover {
+  box-shadow: 0px 0px 6px rgba(255, 255, 255, 0.8);
+  transition: box-shadow 0.1s;
+}
+
+.btn-add:active {
+  background-color: rgb(65, 85, 75);
+}

@@ -26,7 +26,8 @@ export const getTodos = async () => table
 export const addTodo = async todo => {
   table.push({
     id: id.next().value,
-    todo
+    todo: todo.todo,
+    complete: todo.complete || false
   })
 }
 

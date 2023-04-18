@@ -1,17 +1,18 @@
 import $ from 'jquery'
-import { addTodo, deleteTodo, getTodos, markComplete } from './api/server.js'
+import * as dummyAPI from './api/dummy.js'
+import * as serverAPI from './api/server.js'
 
-function setupEventListeners () {
-  $('#add-todo-form').on('submit', handleSubmitTodo)
-  $('#todo-list').on('click', '.delete-button', handleDeleteTodo)
-  $('#todo-list').on('click', '.mark-complete', handleMarkComplete)
+const setupEventListeners = api => {
+  $('#add-todo-form').on('submit', handleSubmitTodo(api))
+  $('#todo-list').on('click', '.delete-button', handleDeleteTodo(api))
+  $('#todo-list').on('click', '.mark-complete', handleMarkComplete(api))
 }
 
 /**
  * Handle todo submit event
  * @param {SubmitEvent} event Submit event
  */
-function handleSubmitTodo (event) {
+const handleSubmitTodo = api => function (event) {
   // Prevent page reload
   event.preventDefault()
 
@@ -19,30 +20,27 @@ function handleSubmitTodo (event) {
   const jqTodo = jqForm.find('input[name=todo]')
 
   const todo = {
-    todo: jqTodo.val()
+    todo: jqTodo.val(),
+    complete: false
   }
 
-  validateTodo(todo)
-    .then(todo => {
-      return addTodo(todo)
-    })
+  validateTodo(api)(todo)
+    .then(todo => api.addTodo(todo))
     .catch(() => {})
-    .then(() => {
-      return getTodos()
-    })
+    .then(() => api.getTodos())
     .then(todos => {
       renderTodos(todos)
     })
 }
 
-async function validateTodo (todo) {
+const validateTodo = api => async function (todo) {
   if (todo.todo === '') {
     console.log('Invalid: empty todo')
     // TODO: handle empty todo
     throw new Error('empty')
   }
 
-  const currentTodos = await getTodos()
+  const currentTodos = await api.getTodos()
 
   const duplicate = currentTodos.find(existingTodo => existingTodo.todo === todo.todo)
   if (duplicate !== undefined) {
@@ -58,14 +56,12 @@ async function validateTodo (todo) {
  * Handle todo delete button click
  * @param {MouseEvent} event Click event
  */
-function handleDeleteTodo (event) {
+const handleDeleteTodo = api => function (event) {
   const jqTarget = $(event.target)
   const row = jqTarget.parents('tr')
   const id = row.data('id')
-  deleteTodo(id)
-    .then(() => {
-      return getTodos()
-    })
+  api.deleteTodo(id)
+    .then(() => api.getTodos())
     .catch(err => {
       // TODO: handle error
       throw err
@@ -79,7 +75,7 @@ function handleDeleteTodo (event) {
  * handle todo mark complete click event
  * @param {MouseEvent} event Click event
  */
-function handleMarkComplete (event) {
+const handleMarkComplete = api => function (event) {
   const jqTarget = $(event.target)
 
   if (jqTarget.is(':disabled') || !jqTarget.is(':checked')) {
@@ -88,10 +84,8 @@ function handleMarkComplete (event) {
 
   const row = jqTarget.parents('tr')
   const id = row.data('id')
-  markComplete(id)
-    .then(() => {
-      return getTodos()
-    })
+  api.markComplete(id)
+    .then(() => api.getTodos())
     .catch(err => {
       throw err
     })
@@ -123,16 +117,18 @@ function renderTodos (todos) {
   )
 }
 
-function main () {
+function main (api) {
   // Initial render
-  getTodos()
+  api.getTodos()
     .then(todos => {
       renderTodos(todos)
     })
 
-  setupEventListeners()
+  setupEventListeners(api)
 }
 
 export default () => {
-  $(main)
+  const useServerAPI = true
+
+  $(() => main(useServerAPI ? serverAPI : dummyAPI))
 }
